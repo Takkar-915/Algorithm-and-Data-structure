@@ -261,6 +261,10 @@ class adb5_2 {
         return;
     }
     
+    /*
+     * 左のノードがない部分まで木の下に移動。
+     * その後、最小値を削除して返す
+     */
     Node deleteMinNode(Node node) {
         if( node == null ){return(null);}
         if( node.left == null ) {
@@ -283,24 +287,24 @@ class adb5_2 {
 
     Node deleteMaxNode(Node node) {
         if( node == null ){return(null);}
-        if( node.left == null ) {
+        if( node.right == null ) {
             if( node.parent == null ) {
-                rootnode = node.right;
-            } else if( node.parent.left == node ) {
-                node.parent.left = node.right;
+                rootnode = node.left;
+            } else if( node.parent.right == node ) {
+                node.parent.right = node.left;
             } else {
-                node.parent.right = node.right;
+                node.parent.left = node.left;
             }
-            if( node.right != null ) {
-                node.right.parent = node.parent;
+            if( node.left != null ) {
+                node.left.parent = node.parent;
             }
-            node.right = null;
+            node.left = null;
             return(node);
         } else {
-            return(deleteMaxNode(node.left));
+            return(deleteMaxNode(node.right));
         }
     }
-    
+
     Node deleteNodeByKey(String key, Node node) {
         int compareflag;
         Node nd;
